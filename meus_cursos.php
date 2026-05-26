@@ -1,8 +1,8 @@
 <?php
 include("conexao.php");
-
-
 include("verificar_sessao.php");
+so_aluno();
+
 
 
 $sql = "SELECT cursos.id, cursos.nome, cursos.categoria, cursos.nivel,
@@ -29,7 +29,7 @@ $resultado = mysqli_query($conexao, $sql);
 
 <h1>Meus Cursos</h1>
 
-<a href="inscrever.php">Ver mais cursos</a> |
+<a href="cursos.php">Ver mais cursos</a> |
 <a href="index.php">Início</a>
 
 <hr>

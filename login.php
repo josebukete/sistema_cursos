@@ -17,9 +17,9 @@ if (isset($_POST['entrar'])){
         $_SESSION['tipo'] = $usuario['tipo'];
 
         if ($usuario['tipo'] == 'formador'){
-            header("Location: listar_cursos.php");
+            header("Location: index.php");
         } else{
-            header("Location: meus_cursos.php");
+            header("Location: index.php");
         }
         exit();
 

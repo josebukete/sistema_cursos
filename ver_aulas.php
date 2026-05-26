@@ -1,7 +1,7 @@
 <?php
 include("conexao.php");
-
 include("verificar_sessao.php");
+so_aluno();
 $curso_id = $_GET['curso_id'];
 
 // Verificar se o aluno está inscrito neste curso
