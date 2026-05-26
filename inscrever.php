@@ -1,15 +1,13 @@
 <?php
 include("conexao.php");
 
-// Por agora o aluno está fixo (igual ao formador_id no criar_curso)
-// Quando tiveres login, isto vem da sessão
 include("verificar_sessao.php");
 
 if (isset($_POST['inscrever'])) {
 
     $curso_id = $_POST['curso_id'];
 
-    // Verificar se já está inscrito
+    // Verificar
     $verificar = "SELECT id FROM inscricoes 
                   WHERE usuario_id=$usuario_id AND curso_id=$curso_id";
     $resultado = mysqli_query($conexao, $verificar);
@@ -24,7 +22,7 @@ if (isset($_POST['inscrever'])) {
     }
 }
 
-// Buscar cursos disponíveis
+// procura cursos disponíveis
 $cursos = mysqli_query($conexao, "SELECT id, nome, categoria, nivel FROM cursos");
 ?>
 

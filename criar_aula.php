@@ -17,7 +17,7 @@ if (isset($_POST['enviar'])) {
     echo "Aula criada com sucesso!";
 }
 
-// Buscar todos os cursos para o dropdown
+// Buscar todos os cursos
 $cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos");
 ?>
 

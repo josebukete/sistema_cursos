@@ -1,6 +1,7 @@
 <?php
 include("verificar_sessao.php");
 include("conexao.php");
+so_formador();
 
 $id = $_GET['id'];
 

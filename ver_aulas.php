@@ -12,7 +12,7 @@ $resultado = mysqli_query($conexao, $verificar);
 if (mysqli_num_rows($resultado) == 0) {
     echo "Não tens acesso a este curso.";
     echo "<br><a href='inscrever.php'>Ver cursos disponíveis</a>";
-    exit(); // Para o PHP aqui — não mostra mais nada
+    exit();
 }
 
 // Buscar aulas do curso com o progresso do aluno
@@ -26,7 +26,7 @@ $sql = "SELECT aulas.id, aulas.titulo, aulas.conteudo, aulas.ordem_aula,
 
 $aulas = mysqli_query($conexao, $sql);
 
-// Buscar o nome do curso
+//o nome do curso
 $curso = mysqli_fetch_assoc(mysqli_query($conexao, 
          "SELECT nome FROM cursos WHERE id=$curso_id"));
 ?>

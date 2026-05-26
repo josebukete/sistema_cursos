@@ -9,7 +9,7 @@ $sql = "SELECT * FROM aulas WHERE id=$id";
 $resultado = mysqli_query($conexao, $sql);
 $aula = mysqli_fetch_assoc($resultado);
 
-// Buscar todos os cursos para o dropdown
+// Buscar todos os cursos
 $cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos");
 
 if (isset($_POST['atualizar'])) {

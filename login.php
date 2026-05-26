@@ -55,6 +55,6 @@ if (isset($_POST['entrar'])){
     </form>
 
     <br>
-    <a href="registar.php">Não tens conta? Registra-te</a>
+    <a href="registar.php">Não tens conta? Registra-se</a>
 </body>
 </html>
