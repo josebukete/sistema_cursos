@@ -6,25 +6,28 @@ if (isset($_POST['entrar'])){
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
-    $sql = "SELECT * FROM usuarios WHERE email = '$email' AND senha = '$senha'";
+    // Busca só pelo email
+    $sql = "SELECT * FROM usuarios WHERE email = '$email'";
     $resultado = mysqli_query($conexao, $sql);
 
     if (mysqli_num_rows($resultado) > 0){
         $usuario = mysqli_fetch_assoc($resultado);
-        
-        $_SESSION['usuario_id'] = $usuario['id'];
-        $_SESSION['nome'] = $usuario['nome'];
-        $_SESSION['tipo'] = $usuario['tipo'];
 
-        if ($usuario['tipo'] == 'formador'){
+        // Verifica a senha cifrada
+        if (password_verify($senha, $usuario['senha'])) {
+
+            $_SESSION['usuario_id'] = $usuario['id'];
+            $_SESSION['nome'] = $usuario['nome'];
+            $_SESSION['tipo'] = $usuario['tipo'];
+
             header("Location: index.php");
-        } else{
-            header("Location: index.php");
+            exit();
+
+        } else {
+            $erro = "Email ou senha incorretos.";
         }
-        exit();
-
-    } else{
-        $erro = "Email ou senha Incorretos.";
+    } else {
+        $erro = "Email ou senha incorretos.";
     }
 }
 ?>
@@ -43,9 +46,9 @@ if (isset($_POST['entrar'])){
         <p style="color:red"><?=$erro?></p>
     <?php endif;?>
 
-    <form method="POST">
+    <form method="POST" autocomplete="off">
         <label>Email:</label><br>
-        <input type="email" name="email" required> <br><br>
+        <input type="text" name="email" required> <br><br>
 
         <label>Senha:</label>
         <input type="password" name="senha" required><br><br>

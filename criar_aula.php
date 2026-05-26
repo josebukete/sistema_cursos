@@ -8,7 +8,11 @@ if (isset($_POST['enviar'])) {
     $titulo = $_POST['titulo'];
     $conteudo = $_POST['conteudo'];
     $curso_id = $_POST['curso_id'];
-    $ordem_aula = $_POST['ordem_aula'];
+
+    // Calcular a ordem automaticamente
+    $total = mysqli_fetch_assoc(mysqli_query($conexao, 
+             "SELECT COUNT(*) AS total FROM aulas WHERE curso_id=$curso_id"));
+    $ordem_aula = $total['total'] + 1;
 
     $sql = "INSERT INTO aulas (titulo, conteudo, curso_id, ordem_aula)
             VALUES ('$titulo', '$conteudo', '$curso_id', '$ordem_aula')";
@@ -19,10 +23,7 @@ if (isset($_POST['enviar'])) {
     exit();
 }
 
-// Pré-seleccionar curso se vier da URL
 $curso_id_selecionado = isset($_GET['curso_id']) ? $_GET['curso_id'] : null;
-
-// Só os cursos do formador logado
 $cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos WHERE formador_id=$usuario_id");
 ?>
 
@@ -53,9 +54,6 @@ $cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos WHERE formador_id=
 
     <label>Conteúdo:</label><br>
     <textarea name="conteudo" rows="6" cols="50" placeholder="Descreve o conteúdo da aula"></textarea><br><br>
-
-    <label>Ordem da Aula:</label><br>
-    <input type="number" name="ordem_aula" value="1" min="1"><br><br>
 
     <button type="submit" name="enviar">Criar Aula</button>
 

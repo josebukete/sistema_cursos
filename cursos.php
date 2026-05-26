@@ -19,10 +19,12 @@ if (isset($_POST['inscrever'])) {
 
 // Buscar todos os cursos com progresso do aluno logado
 $sql = "SELECT cursos.*,
+               usuarios.nome AS nome_formador,
                COUNT(DISTINCT aulas.id) AS total_aulas,
                SUM(CASE WHEN progresso_aulas.concluida = 1 THEN 1 ELSE 0 END) AS aulas_concluidas,
                MAX(CASE WHEN inscricoes.usuario_id = $usuario_id THEN 1 ELSE 0 END) AS inscrito
         FROM cursos
+        JOIN usuarios ON cursos.formador_id = usuarios.id
         LEFT JOIN aulas ON aulas.curso_id = cursos.id
         LEFT JOIN progresso_aulas ON progresso_aulas.aula_id = aulas.id
                                   AND progresso_aulas.usuario_id = $usuario_id
@@ -48,6 +50,7 @@ $resultado = mysqli_query($conexao, $sql);
 <?php while($curso = mysqli_fetch_assoc($resultado)): ?>
 
     <h3><?= $curso['nome'] ?></h3>
+    <p>Por: <?= $curso['nome_formador'] ?></p>
     <p><?= $curso['descricao'] ?></p>
     <p>Categoria: <?= $curso['categoria'] ?> | Nível: <?= $curso['nivel'] ?></p>
 

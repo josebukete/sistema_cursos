@@ -9,6 +9,8 @@ if (isset($_POST['registar'])){
     $senha = $_POST ['senha'];
     $tipo = $_POST ['tipo'];
 
+    $senha_cifrada = password_hash($senha, PASSWORD_DEFAULT);
+
     //esse email será q existe?
     $verificar = "SELECT id FROM usuarios WHERE email = '$email'";
     $resultado = mysqli_query($conexao, $verificar);
@@ -16,7 +18,7 @@ if (isset($_POST['registar'])){
     if (mysqli_num_rows($resultado) >0){
         $erro = "Este email já está registado.";
     } else {
-        $sql = "INSERT INTO usuarios (nome, email, senha,tipo) VALUES ('$nome', '$email', '$senha', '$tipo')";
+        $sql = "INSERT INTO usuarios (nome, email, senha,tipo) VALUES ('$nome', '$email', '$senha_cifrada', '$tipo')";
         mysqli_query($conexao, $sql);
 
         $erro = "Conta criada com Sucesso!";
@@ -38,18 +40,18 @@ if (isset($_POST['registar'])){
         <p><?= $erro?></p>
     <?php endif;?>
 
-    <form method="POST">
+    <form method="POST" autocomplete="off">
 
-        <label>Nome:</label>
-        <input type="text" name="nome" required> <br><br>
+        <label>Nome:</label><br>
+        <input type="text" name="nome" required><br><br>
 
-        <label>Email:</label>
-        <input type="email" name="email">
+        <label>Email:</label><br>
+        <input type="text" name="email" required><br><br>
 
-        <label>Senha:</label>
-        <input type="password" name="senha">
+        <label>Senha:</label><br>
+        <input type="password" name="senha" required><br><br>
 
-        <label>Tipo de Conta:</label>
+        <label>Tipo de Conta:</label><br>
         <select name="tipo">
             <option value="aluno">Aluno</option>
             <option value="formador">Formador</option>

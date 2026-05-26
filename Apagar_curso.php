@@ -5,10 +5,18 @@ include("conexao.php");
 
 $id = $_GET['id'];
 
-$sql = "DELETE FROM cursos WHERE id=$id";
+// Verificar se o curso pertence ao formador logado
+$verificar = "SELECT id FROM cursos WHERE id=$id AND formador_id=$usuario_id";
+$resultado = mysqli_query($conexao, $verificar);
 
-mysqli_query($conexao, $sql);
+if (mysqli_num_rows($resultado) == 0) {
+    echo "Acesso negado. Este curso não te pertence.";
+    echo "<br><a href='index.php'>Voltar</a>";
+    exit();
+}
 
-echo "Curso apagado com sucesso!";
-echo "<br><a href='cursos.php'>Voltar</a>";
+mysqli_query($conexao, "DELETE FROM cursos WHERE id=$id");
+
+header("Location: index.php");
+exit();
 ?>

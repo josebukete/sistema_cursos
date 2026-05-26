@@ -11,7 +11,7 @@ $resultado = mysqli_query($conexao, $sql);
 $aula = mysqli_fetch_assoc($resultado);
 
 // Buscar todos os cursos
-$cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos");
+$cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos WHERE formador_id=$usuario_id");
 
 if (isset($_POST['atualizar'])) {
 
