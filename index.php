@@ -26,6 +26,7 @@ include("conexao.php");
         <?php while($c = mysqli_fetch_assoc($meus_cursos)): ?>
             <p>
                 <?= $c['nome'] ?> —
+                <a href="ver_aulas_formador.php?curso_id=<?= $c['id'] ?>">Ver aulas</a> |
                 <a href="criar_aula.php?curso_id=<?= $c['id'] ?>">Adicionar aula</a> |
                 <a href="editar_curso.php?id=<?= $c['id'] ?>">Editar</a> |
                 <a href="Apagar_curso.php?id=<?= $c['id'] ?>" onclick="return confirm('Tens a certeza?')">Apagar</a>

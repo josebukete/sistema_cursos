@@ -1,8 +1,7 @@
 <?php
-include("conexao.php");
 include("verificar_sessao.php");
 so_aluno();
-
+include("conexao.php");
 
 
 $sql = "SELECT cursos.id, cursos.nome, cursos.categoria, cursos.nivel,

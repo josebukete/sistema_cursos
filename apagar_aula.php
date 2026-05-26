@@ -5,10 +5,13 @@ include("conexao.php");
 
 $id = $_GET['id'];
 
-$sql = "DELETE FROM aulas WHERE id=$id";
+// Buscar o curso_id antes de apagar
+$aula = mysqli_fetch_assoc(mysqli_query($conexao, "SELECT curso_id FROM aulas WHERE id=$id"));
+$curso_id = $aula['curso_id'];
 
+$sql = "DELETE FROM aulas WHERE id=$id";
 mysqli_query($conexao, $sql);
 
-echo "Aula apagada com sucesso!";
-echo "<br><a href='listar_aulas.php'>Voltar</a>";
+header("Location: ver_aulas_formador.php?curso_id=$curso_id");
+exit();
 ?>

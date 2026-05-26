@@ -1,7 +1,7 @@
 <?php
-include("conexao.php");
 include("verificar_sessao.php");
 so_aluno();
+include("conexao.php");
 $curso_id = $_GET['curso_id'];
 
 // Verificar se o aluno está inscrito neste curso
@@ -11,7 +11,7 @@ $resultado = mysqli_query($conexao, $verificar);
 
 if (mysqli_num_rows($resultado) == 0) {
     echo "Não tens acesso a este curso.";
-    echo "<br><a href='inscrever.php'>Ver cursos disponíveis</a>";
+    echo "<br><a href='cursos.php'>Ver cursos disponíveis</a>";
     exit();
 }
 

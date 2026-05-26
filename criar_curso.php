@@ -9,7 +9,7 @@ if (isset($_POST['enviar'])) {
     $descricao = $_POST['descricao'];
     $categoria = $_POST['categoria'];
     $nivel = $_POST['nivel'];
-    $formador_id = 1; // depois ligamos ao login
+    $formador_id = $usuario_id;
 
     $sql = "INSERT INTO cursos (nome, descricao, categoria, nivel, formador_id)
             VALUES ('$nome', '$descricao', '$categoria', '$nivel', '$formador_id')";

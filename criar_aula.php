@@ -15,11 +15,15 @@ if (isset($_POST['enviar'])) {
 
     mysqli_query($conexao, $sql);
 
-    echo "Aula criada com sucesso!";
+    header("Location: ver_aulas_formador.php?curso_id=$curso_id");
+    exit();
 }
 
-// Buscar todos os cursos
-$cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos");
+// Pré-seleccionar curso se vier da URL
+$curso_id_selecionado = isset($_GET['curso_id']) ? $_GET['curso_id'] : null;
+
+// Só os cursos do formador logado
+$cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos WHERE formador_id=$usuario_id");
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +41,10 @@ $cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos");
     <label>Curso:</label><br>
     <select name="curso_id">
         <?php while($curso = mysqli_fetch_assoc($cursos)): ?>
-            <option value="<?= $curso['id'] ?>"><?= $curso['nome'] ?></option>
+            <option value="<?= $curso['id'] ?>"
+                <?= $curso['id'] == $curso_id_selecionado ? 'selected' : '' ?>>
+                <?= $curso['nome'] ?>
+            </option>
         <?php endwhile; ?>
     </select><br><br>
 
@@ -55,7 +62,6 @@ $cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos");
 </form>
 
 <br>
-<a href="listar_aulas.php">Ver todas as aulas</a> |
 <a href="index.php">Início</a>
 
 </body>
