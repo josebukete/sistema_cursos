@@ -1,7 +1,7 @@
 <?php
-include("verificar_sessao.php");
+include("../config/verificar_sessao.php");
 so_aluno();
-include("conexao.php");
+include("../config/conexao.php");
 
 $aula_id = $_GET['id'];
 $curso_id = $_GET['curso_id'];
@@ -13,7 +13,7 @@ $resultado = mysqli_query($conexao, $verificar);
 
 if (mysqli_num_rows($resultado) == 0) {
     echo "Não tens acesso a este curso.";
-    echo "<br><a href='cursos.php'>Ver cursos disponíveis</a>";
+    echo "<br><a href='../cursos/cursos.php'>Ver cursos disponíveis</a>";
     exit();
 }
 
@@ -47,7 +47,7 @@ $curso = mysqli_fetch_assoc(mysqli_query($conexao,
 
 <?php if ($aula['video']): ?>
     <video width="700" controls autoplay>
-        <source src="<?= $aula['video'] ?>" type="video/mp4">
+        <source src="../<?= $aula['video'] ?>" type="video/mp4">
         O teu browser não suporta vídeo.
     </video><br><br>
 <?php else: ?>

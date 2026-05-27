@@ -1,7 +1,7 @@
 <?php
-include("verificar_sessao.php");
+include("../config/verificar_sessao.php");
 so_formador();
-include("conexao.php");
+include("../config/conexao.php");
 
 $id = $_GET['id'];
 
@@ -11,12 +11,12 @@ $resultado = mysqli_query($conexao, $verificar);
 
 if (mysqli_num_rows($resultado) == 0) {
     echo "Acesso negado. Este curso não te pertence.";
-    echo "<br><a href='index.php'>Voltar</a>";
+    echo "<br><a href='../index.php'>Voltar</a>";
     exit();
 }
 
 mysqli_query($conexao, "DELETE FROM cursos WHERE id=$id");
 
-header("Location: index.php");
+header("Location: ../index.php");
 exit();
 ?>

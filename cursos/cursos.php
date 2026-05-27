@@ -1,6 +1,6 @@
 <?php
-include("verificar_sessao.php");
-include("conexao.php");
+include("../config/verificar_sessao.php");
+include("../config/conexao.php");
 
 // Inscrição quando aluno clica "Inscrever-me"
 if (isset($_POST['inscrever'])) {
@@ -44,14 +44,14 @@ $resultado = mysqli_query($conexao, $sql);
 <body>
 
 <h1>Cursos</h1>
-<a href="index.php">Início</a>
+<a href="../index.php">Início</a>
 <hr>
 
 <?php while($curso = mysqli_fetch_assoc($resultado)): ?>
 
     <h3><?= $curso['nome'] ?></h3>
     <?php if ($curso['thumbnail']): ?>
-    <img src="<?= $curso['thumbnail'] ?>" alt="Thumbnail" width="250"><br><br>
+    <img src="../<?= $curso['thumbnail'] ?>" alt="Thumbnail" width="250"><br><br>
     <?php endif; ?>
     <p>Por: <?= $curso['nome_formador'] ?></p>
     <p><?= $curso['descricao'] ?></p>
@@ -67,7 +67,7 @@ $resultado = mysqli_query($conexao, $sql);
         <p>Progresso: <?= $concluidas ?>/<?= $total ?> aulas</p>
         <progress value="<?= $percentagem ?>" max="100"></progress>
         <span><?= $percentagem ?>%</span><br><br>
-        <a href="ver_aulas.php?curso_id=<?= $curso['id'] ?>">Ver Aulas</a>
+        <a href="../aulas/ver_aulas.php?curso_id=<?= $curso['id'] ?>">Ver Aulas</a>
 
     <?php elseif ($usuario_tipo == 'aluno'): ?>
 
@@ -79,9 +79,9 @@ $resultado = mysqli_query($conexao, $sql);
     <?php endif; ?>
 
     <?php if ($usuario_tipo == 'formador' && $curso['formador_id'] == $usuario_id): ?>
-    <a href="ver_aulas_formador.php?curso_id=<?= $curso['id'] ?>">Ver aulas</a> |
+    <a href="../aulas/ver_aulas_formador.php?curso_id=<?= $curso['id'] ?>">Ver aulas</a> |
     <a href="editar_curso.php?id=<?= $curso['id'] ?>">Editar</a> |
-    <a href="Apagar_curso.php?id=<?= $curso['id'] ?>"
+    <a href="apagar_curso.php?id=<?= $curso['id'] ?>"
        onclick="return confirm('Tens a certeza?')">Apagar</a>
 <?php endif; ?>
 
@@ -89,7 +89,7 @@ $resultado = mysqli_query($conexao, $sql);
 
 <?php endwhile; ?>
 
-<a href="logout.php">Terminar sessão</a>
+<a href="../autenticacao/logout.php">Terminar sessão</a>
 
 </body>
 </html>

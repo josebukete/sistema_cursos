@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("conexao.php");
+include("../config/conexao.php");
 
 if (isset($_POST['entrar'])){
     $email = $_POST['email'];
@@ -20,7 +20,7 @@ if (isset($_POST['entrar'])){
             $_SESSION['nome'] = $usuario['nome'];
             $_SESSION['tipo'] = $usuario['tipo'];
 
-            header("Location: index.php");
+            header("Location: ../index.php");
             exit();
 
         } else {

@@ -1,7 +1,7 @@
 <?php
-include("verificar_sessao.php");
+include("../config/verificar_sessao.php");
 so_formador();
-include("conexao.php");
+include("../config/conexao.php");
 
 if (isset($_POST['enviar'])) {
 
@@ -18,7 +18,7 @@ if (isset($_POST['enviar'])) {
     $video = null;
     if (!empty($_FILES['video']['name'])) {
         $nome_video = time() . '_' . $_FILES['video']['name'];
-        move_uploaded_file($_FILES['video']['tmp_name'], "uploads/videos/$nome_video");
+        move_uploaded_file($_FILES['video']['tmp_name'], "../uploads/videos/$nome_video");
         $video = "uploads/videos/$nome_video";
     }
 
@@ -26,7 +26,7 @@ if (isset($_POST['enviar'])) {
     $thumbnail = null;
     if (!empty($_FILES['thumbnail']['name'])) {
         $nome_thumb = time() . '_' . $_FILES['thumbnail']['name'];
-        move_uploaded_file($_FILES['thumbnail']['tmp_name'], "uploads/thumbs/$nome_thumb");
+        move_uploaded_file($_FILES['thumbnail']['tmp_name'], "../uploads/thumbs/$nome_thumb");
         $thumbnail = "uploads/thumbs/$nome_thumb";
     }
 
@@ -83,7 +83,7 @@ $cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos WHERE formador_id=
 </form>
 
 <br>
-<a href="index.php">Início</a>
+<a href="../index.php">Início</a>
 
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php
-include("verificar_sessao.php");
+include("../config/verificar_sessao.php");
 so_formador();
-include("conexao.php");
+include("../config/conexao.php");
 
 $id = $_GET['id'];
 

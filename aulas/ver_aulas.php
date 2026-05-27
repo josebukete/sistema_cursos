@@ -1,7 +1,7 @@
 <?php
-include("verificar_sessao.php");
+include("../config/verificar_sessao.php");
 so_aluno();
-include("conexao.php");
+include("../config/conexao.php");
 
 $curso_id = $_GET['curso_id'];
 
@@ -11,7 +11,7 @@ $resultado = mysqli_query($conexao, $verificar);
 
 if (mysqli_num_rows($resultado) == 0) {
     echo "Não tens acesso a este curso.";
-    echo "<br><a href='cursos.php'>Ver cursos disponíveis</a>";
+    echo "<br><a href='../cursos/cursos.php'>Ver cursos disponíveis</a>";
     exit();
 }
 
@@ -39,7 +39,7 @@ $curso = mysqli_fetch_assoc(mysqli_query($conexao,
 <body>
 
 <h1><?= $curso['nome'] ?></h1>
-<a href="cursos.php">← Voltar aos cursos</a>
+<a href="../cursos/cursos.php">← Voltar aos cursos</a>
 <hr>
 
 <?php while($aula = mysqli_fetch_assoc($aulas)): ?>
@@ -47,7 +47,7 @@ $curso = mysqli_fetch_assoc(mysqli_query($conexao,
     <div class="aula-item <?= $aula['concluida'] ? 'concluida' : '' ?>">
 
         <?php if ($aula['thumbnail']): ?>
-            <img src="<?= $aula['thumbnail'] ?>" alt="Thumbnail" width="200">
+            <img src="../<?= $aula['thumbnail'] ?>" alt="Thumbnail" width="200">
         <?php endif; ?>
 
         <h3>Aula <?= $aula['ordem_aula'] ?> — <?= $aula['titulo'] ?></h3>

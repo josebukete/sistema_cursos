@@ -1,6 +1,6 @@
 <?php
-include("verificar_sessao.php");
-include("conexao.php");
+include("config/verificar_sessao.php");
+include("config/conexao.php");
 ?>
 
 <!DOCTYPE html>
@@ -30,13 +30,13 @@ include("conexao.php");
                 <?php endif; ?>
                 <p>
                     <strong><?= $c['nome'] ?></strong> —
-                    <a href="ver_aulas_formador.php?curso_id=<?= $c['id'] ?>">Ver aulas</a>
+                    <a href="aulas/ver_aulas_formador.php?curso_id=<?= $c['id'] ?>">Ver aulas</a>
                     &nbsp;|&nbsp;
-                    <a href="criar_aula.php?curso_id=<?= $c['id'] ?>">Adicionar aula</a>
+                    <a href="aulas/criar_aula.php?curso_id=<?= $c['id'] ?>">Adicionar aula</a>
                     &nbsp;|&nbsp;
-                    <a href="editar_curso.php?id=<?= $c['id'] ?>">Editar</a>
+                    <a href="cursos/editar_curso.php?id=<?= $c['id'] ?>">Editar</a>
                     &nbsp;|&nbsp;
-                    <a href="Apagar_curso.php?id=<?= $c['id'] ?>" onclick="return confirm('Tens a certeza?')">Apagar</a>
+                    <a href="cursos/apagar_curso.php?id=<?= $c['id'] ?>" onclick="return confirm('Tens a certeza?')">Apagar</a>
                 </p>
             </div>
             <hr>
@@ -44,8 +44,8 @@ include("conexao.php");
     <?php endif; ?>
 
     <br>
-    <a href="criar_curso.php">+ Criar novo curso</a> |
-    <a href="cursos.php">Ver todos os cursos</a>
+    <a href="cursos/criar_curso.php">+ Criar novo curso</a> |
+    <a href="cursos/cursos.php">Ver todos os cursos</a>
 
 <?php else: ?>
 
@@ -81,19 +81,19 @@ include("conexao.php");
                 <p>Progresso: <?= $concluidas ?>/<?= $total ?> aulas concluídas</p>
                 <progress value="<?= $percentagem ?>" max="100"></progress>
                 <span><?= $percentagem ?>%</span> —
-                <a href="ver_aulas.php?curso_id=<?= $c['id'] ?>">Ver Aulas</a>
+                <a href="aulas/ver_aulas.php?curso_id=<?= $c['id'] ?>">Ver Aulas</a>
             </div>
             <hr>
         <?php endwhile; ?>
     <?php endif; ?>
 
     <br>
-    <a href="cursos.php">+ Inscrever em novo curso</a>
+    <a href="cursos/cursos.php">+ Inscrever em novo curso</a>
 
 <?php endif; ?>
 
 <hr>
-<a href="logout.php">Terminar sessão</a>
+<a href="autenticacao/logout.php">Terminar sessão</a>
 
 </body>
 </html>

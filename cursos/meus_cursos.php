@@ -1,7 +1,7 @@
 <?php
-include("verificar_sessao.php");
+include("../config/verificar_sessao.php");
 so_aluno();
-include("conexao.php");
+include("../config/conexao.php");
 
 
 $sql = "SELECT cursos.id, cursos.nome, cursos.categoria, cursos.nivel,
@@ -29,7 +29,7 @@ $resultado = mysqli_query($conexao, $sql);
 <h1>Meus Cursos</h1>
 
 <a href="cursos.php">Ver mais cursos</a> |
-<a href="index.php">Início</a>
+<a href="../index.php">Início</a>
 
 <hr>
 
@@ -52,7 +52,7 @@ $resultado = mysqli_query($conexao, $sql);
         <span><?= $percentagem ?>%</span>
 
         <br><br>
-        <a href="ver_aulas.php?curso_id=<?= $curso['id'] ?>">Ver Aulas</a>
+        <a href="../aulas/ver_aulas.php?curso_id=<?= $curso['id'] ?>">Ver Aulas</a>
     </div>
 
     <hr>

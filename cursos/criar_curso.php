@@ -1,7 +1,7 @@
 <?php
-include("verificar_sessao.php");
+include("../config/verificar_sessao.php");
 so_formador();
-include("conexao.php");
+include("../config/conexao.php");
 
 if (isset($_POST['enviar'])) {
 
@@ -15,7 +15,7 @@ if (isset($_POST['enviar'])) {
     $thumbnail = null;
     if (!empty($_FILES['thumbnail']['name'])) {
         $nome_thumb = time() . '_' . $_FILES['thumbnail']['name'];
-        move_uploaded_file($_FILES['thumbnail']['tmp_name'], "uploads/thumbs/$nome_thumb");
+        move_uploaded_file($_FILES['thumbnail']['tmp_name'], "../uploads/thumbs/$nome_thumb");
         $thumbnail = "uploads/thumbs/$nome_thumb";
     }
 
@@ -24,7 +24,7 @@ if (isset($_POST['enviar'])) {
 
     mysqli_query($conexao, $sql);
 
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 ?>
@@ -65,7 +65,7 @@ if (isset($_POST['enviar'])) {
 </form>
 
 <br>
-<a href="index.php">Início</a>
+<a href="../index.php">Início</a>
 
 </body>
 </html>

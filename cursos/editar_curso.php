@@ -1,7 +1,7 @@
 <?php
-include("verificar_sessao.php");
+include("../config/verificar_sessao.php");
 so_formador();
-include("conexao.php");
+include("../config/conexao.php");
 
 $id = $_GET['id'];
 
@@ -10,7 +10,7 @@ $resultado = mysqli_query($conexao, $verificar);
 
 if (mysqli_num_rows($resultado) == 0) {
     echo "Acesso negado. Este curso não te pertence.";
-    echo "<br><a href='index.php'>Voltar</a>";
+    echo "<br><a href='../index.php'>Voltar</a>";
     exit();
 }
 
@@ -26,7 +26,7 @@ if (isset($_POST['atualizar'])) {
 
     if (!empty($_FILES['thumbnail']['name'])) {
         $nome_thumb = time() . '_' . $_FILES['thumbnail']['name'];
-        move_uploaded_file($_FILES['thumbnail']['tmp_name'], "uploads/thumbs/$nome_thumb");
+        move_uploaded_file($_FILES['thumbnail']['tmp_name'], "../uploads/thumbs/$nome_thumb");
         $thumbnail = "uploads/thumbs/$nome_thumb";
     }
 
@@ -40,7 +40,7 @@ if (isset($_POST['atualizar'])) {
 
     mysqli_query($conexao, $sql);
 
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 ?>
@@ -75,7 +75,7 @@ if (isset($_POST['atualizar'])) {
 
     <label>Thumbnail actual:</label><br>
     <?php if ($curso['thumbnail']): ?>
-        <img src="<?= $curso['thumbnail'] ?>" alt="Thumbnail" width="200"><br><br>
+        <img src="../<?= $curso['thumbnail'] ?>" alt="Thumbnail" width="200"><br><br>
     <?php else: ?>
         <p>Sem thumbnail.</p>
     <?php endif; ?>
@@ -88,7 +88,7 @@ if (isset($_POST['atualizar'])) {
 </form>
 
 <br>
-<a href="index.php">Cancelar</a>
+<a href="../index.php">Cancelar</a>
 
 </body>
 </html>

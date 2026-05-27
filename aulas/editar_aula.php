@@ -1,7 +1,7 @@
 <?php
-include("verificar_sessao.php");
+include("../config/verificar_sessao.php");
 so_formador();
-include("conexao.php");
+include("../config/conexao.php");
 
 $id = $_GET['id'];
 
@@ -21,13 +21,13 @@ if (isset($_POST['atualizar'])) {
 
     if (!empty($_FILES['thumbnail']['name'])) {
         $nome_thumb = time() . '_' . $_FILES['thumbnail']['name'];
-        move_uploaded_file($_FILES['thumbnail']['tmp_name'], "uploads/thumbs/$nome_thumb");
+        move_uploaded_file($_FILES['thumbnail']['tmp_name'], "../uploads/thumbs/$nome_thumb");
         $thumbnail = "uploads/thumbs/$nome_thumb";
     }
 
     if (!empty($_FILES['video']['name'])) {
         $nome_video = time() . '_' . $_FILES['video']['name'];
-        move_uploaded_file($_FILES['video']['tmp_name'], "uploads/videos/$nome_video");
+        move_uploaded_file($_FILES['video']['tmp_name'], "../uploads/videos/$nome_video");
         $video = "uploads/videos/$nome_video";
     }
 
@@ -76,7 +76,7 @@ if (isset($_POST['atualizar'])) {
 
     <label>Thumbnail actual:</label><br>
     <?php if ($aula['thumbnail']): ?>
-        <img src="<?= $aula['thumbnail'] ?>" alt="Thumbnail" width="200"><br><br>
+        <img src="../<?= $aula['thumbnail'] ?>" alt="Thumbnail" width="200"><br><br>
     <?php else: ?>
         <p>Sem thumbnail.</p>
     <?php endif; ?>
@@ -87,7 +87,7 @@ if (isset($_POST['atualizar'])) {
     <label>Vídeo actual:</label><br>
     <?php if ($aula['video']): ?>
         <video width="400" controls>
-            <source src="<?= $aula['video'] ?>" type="video/mp4">
+            <source src="../<?= $aula['video'] ?>" type="video/mp4">
         </video><br><br>
     <?php else: ?>
         <p>Sem vídeo.</p>

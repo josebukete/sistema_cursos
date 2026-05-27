@@ -1,7 +1,7 @@
 <?php
-include("verificar_sessao.php");
+include("../config/verificar_sessao.php");
 so_formador();
-include("conexao.php");
+include("../config/conexao.php");
 
 $curso_id = $_GET['curso_id'];
 
@@ -11,7 +11,7 @@ $resultado = mysqli_query($conexao, $verificar);
 
 if (mysqli_num_rows($resultado) == 0) {
     echo "Acesso negado. Este curso não te pertence.";
-    echo "<br><a href='index.php'>Voltar</a>";
+    echo "<br><a href='../index.php'>Voltar</a>";
     exit();
 }
 
@@ -31,7 +31,7 @@ $aulas = mysqli_query($conexao,
 <body>
 
 <h1><?= $curso['nome'] ?></h1>
-<a href="index.php">← Voltar</a> |
+<a href="../index.php">← Voltar</a> |
 <a href="criar_aula.php?curso_id=<?= $curso_id ?>">+ Adicionar aula</a>
 <hr>
 
@@ -42,7 +42,7 @@ $aulas = mysqli_query($conexao,
     <div class="aula-item">
 
         <?php if ($aula['thumbnail']): ?>
-            <img src="<?= $aula['thumbnail'] ?>" alt="Thumbnail" width="200"><br><br>
+            <img src="../<?= $aula['thumbnail'] ?>" alt="Thumbnail" width="200"><br><br>
         <?php endif; ?>
 
         <h3>Aula <?= $aula['ordem_aula'] ?> — <?= $aula['titulo'] ?></h3>

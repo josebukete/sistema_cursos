@@ -1,6 +1,6 @@
 <?php
-include("verificar_sessao.php");
-include("conexao.php");
+include("../config/verificar_sessao.php");
+include("../config/conexao.php");
 $aula_id = $_POST['aula_id'];
 $curso_id = $_POST['curso_id'];
 
