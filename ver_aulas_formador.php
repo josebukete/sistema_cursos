@@ -39,14 +39,24 @@ $aulas = mysqli_query($conexao,
     <p>Este curso ainda não tem aulas.</p>
 <?php else: ?>
     <?php while($aula = mysqli_fetch_assoc($aulas)): ?>
-        <div class="aula-item">
-            <h3>Aula <?= $aula['ordem_aula'] ?> — <?= $aula['titulo'] ?></h3>
-            <p><?= $aula['conteudo'] ?></p>
-            <a href="editar_aula.php?id=<?= $aula['id'] ?>">Editar</a> |
-            <a href="apagar_aula.php?id=<?= $aula['id'] ?>"
-               onclick="return confirm('Apagar esta aula?')">Apagar</a>
-        </div>
-        <hr>
+    <div class="aula-item">
+
+        <?php if ($aula['thumbnail']): ?>
+            <img src="<?= $aula['thumbnail'] ?>" alt="Thumbnail" width="200"><br><br>
+        <?php endif; ?>
+
+        <h3>Aula <?= $aula['ordem_aula'] ?> — <?= $aula['titulo'] ?></h3>
+        <p><?= $aula['conteudo'] ?></p>
+
+        <?php if (!$aula['video']): ?>
+            <p>⚠️ Esta aula não tem vídeo.</p>
+        <?php endif; ?>
+
+        <a href="editar_aula.php?id=<?= $aula['id'] ?>">Editar</a> |
+        <a href="apagar_aula.php?id=<?= $aula['id'] ?>"
+           onclick="return confirm('Apagar esta aula?')">Apagar</a>
+    </div>
+    <hr>
     <?php endwhile; ?>
 <?php endif; ?>
 

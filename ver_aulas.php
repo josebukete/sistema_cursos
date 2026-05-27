@@ -2,9 +2,9 @@
 include("verificar_sessao.php");
 so_aluno();
 include("conexao.php");
+
 $curso_id = $_GET['curso_id'];
 
-// Verificar se o aluno está inscrito neste curso
 $verificar = "SELECT id FROM inscricoes 
               WHERE usuario_id=$usuario_id AND curso_id=$curso_id";
 $resultado = mysqli_query($conexao, $verificar);
@@ -15,8 +15,8 @@ if (mysqli_num_rows($resultado) == 0) {
     exit();
 }
 
-// Buscar aulas do curso com o progresso do aluno
 $sql = "SELECT aulas.id, aulas.titulo, aulas.conteudo, aulas.ordem_aula,
+               aulas.thumbnail, aulas.video,
                progresso_aulas.concluida
         FROM aulas
         LEFT JOIN progresso_aulas ON progresso_aulas.aula_id = aulas.id
@@ -26,8 +26,7 @@ $sql = "SELECT aulas.id, aulas.titulo, aulas.conteudo, aulas.ordem_aula,
 
 $aulas = mysqli_query($conexao, $sql);
 
-//o nome do curso
-$curso = mysqli_fetch_assoc(mysqli_query($conexao, 
+$curso = mysqli_fetch_assoc(mysqli_query($conexao,
          "SELECT nome FROM cursos WHERE id=$curso_id"));
 ?>
 
@@ -40,25 +39,24 @@ $curso = mysqli_fetch_assoc(mysqli_query($conexao,
 <body>
 
 <h1><?= $curso['nome'] ?></h1>
-<a href="meus_cursos.php">← Voltar aos meus cursos</a>
+<a href="cursos.php">← Voltar aos cursos</a>
 <hr>
 
 <?php while($aula = mysqli_fetch_assoc($aulas)): ?>
 
     <div class="aula-item <?= $aula['concluida'] ? 'concluida' : '' ?>">
 
+        <?php if ($aula['thumbnail']): ?>
+            <img src="<?= $aula['thumbnail'] ?>" alt="Thumbnail" width="200">
+        <?php endif; ?>
+
         <h3>Aula <?= $aula['ordem_aula'] ?> — <?= $aula['titulo'] ?></h3>
-        <p><?= $aula['conteudo'] ?></p>
 
         <?php if ($aula['concluida']): ?>
             <p>✅ Concluída</p>
-        <?php else: ?>
-            <form method="POST" action="marcar_concluida.php">
-                <input type="hidden" name="aula_id" value="<?= $aula['id'] ?>">
-                <input type="hidden" name="curso_id" value="<?= $curso_id ?>">
-                <button type="submit">Marcar como concluída</button>
-            </form>
         <?php endif; ?>
+
+        <a href="ver_aula.php?id=<?= $aula['id'] ?>&curso_id=<?= $curso_id ?>">Ver Aula</a>
 
     </div>
 

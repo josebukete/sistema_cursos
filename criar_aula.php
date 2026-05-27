@@ -9,13 +9,29 @@ if (isset($_POST['enviar'])) {
     $conteudo = $_POST['conteudo'];
     $curso_id = $_POST['curso_id'];
 
-    // Calcular a ordem automaticamente
-    $total = mysqli_fetch_assoc(mysqli_query($conexao, 
+    // Ordem automática
+    $total = mysqli_fetch_assoc(mysqli_query($conexao,
              "SELECT COUNT(*) AS total FROM aulas WHERE curso_id=$curso_id"));
     $ordem_aula = $total['total'] + 1;
 
-    $sql = "INSERT INTO aulas (titulo, conteudo, curso_id, ordem_aula)
-            VALUES ('$titulo', '$conteudo', '$curso_id', '$ordem_aula')";
+    // Upload do vídeo
+    $video = null;
+    if (!empty($_FILES['video']['name'])) {
+        $nome_video = time() . '_' . $_FILES['video']['name'];
+        move_uploaded_file($_FILES['video']['tmp_name'], "uploads/videos/$nome_video");
+        $video = "uploads/videos/$nome_video";
+    }
+
+    // Upload da thumbnail
+    $thumbnail = null;
+    if (!empty($_FILES['thumbnail']['name'])) {
+        $nome_thumb = time() . '_' . $_FILES['thumbnail']['name'];
+        move_uploaded_file($_FILES['thumbnail']['tmp_name'], "uploads/thumbs/$nome_thumb");
+        $thumbnail = "uploads/thumbs/$nome_thumb";
+    }
+
+    $sql = "INSERT INTO aulas (titulo, conteudo, curso_id, ordem_aula, video, thumbnail)
+            VALUES ('$titulo', '$conteudo', '$curso_id', '$ordem_aula', '$video', '$thumbnail')";
 
     mysqli_query($conexao, $sql);
 
@@ -37,7 +53,8 @@ $cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos WHERE formador_id=
 
 <h2>Criar Aula</h2>
 
-<form method="POST">
+<!-- enctype obrigatório para upload de ficheiros -->
+<form method="POST" enctype="multipart/form-data">
 
     <label>Curso:</label><br>
     <select name="curso_id">
@@ -54,6 +71,12 @@ $cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos WHERE formador_id=
 
     <label>Conteúdo:</label><br>
     <textarea name="conteudo" rows="6" cols="50" placeholder="Descreve o conteúdo da aula"></textarea><br><br>
+
+    <label>Vídeo da Aula:</label><br>
+    <input type="file" name="video" accept="video/*"><br><br>
+
+    <label>Thumbnail da Aula:</label><br>
+    <input type="file" name="thumbnail" accept="image/*"><br><br>
 
     <button type="submit" name="enviar">Criar Aula</button>
 

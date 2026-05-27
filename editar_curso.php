@@ -5,7 +5,6 @@ include("conexao.php");
 
 $id = $_GET['id'];
 
-// Verificar se o curso pertence ao formador logado
 $verificar = "SELECT * FROM cursos WHERE id=$id AND formador_id=$usuario_id";
 $resultado = mysqli_query($conexao, $verificar);
 
@@ -23,12 +22,20 @@ if (isset($_POST['atualizar'])) {
     $descricao = $_POST['descricao'];
     $categoria = $_POST['categoria'];
     $nivel = $_POST['nivel'];
+    $thumbnail = $curso['thumbnail']; // mantém a atual por defeito
+
+    if (!empty($_FILES['thumbnail']['name'])) {
+        $nome_thumb = time() . '_' . $_FILES['thumbnail']['name'];
+        move_uploaded_file($_FILES['thumbnail']['tmp_name'], "uploads/thumbs/$nome_thumb");
+        $thumbnail = "uploads/thumbs/$nome_thumb";
+    }
 
     $sql = "UPDATE cursos SET
             nome='$nome',
             descricao='$descricao',
             categoria='$categoria',
-            nivel='$nivel'
+            nivel='$nivel',
+            thumbnail='$thumbnail'
             WHERE id=$id AND formador_id=$usuario_id";
 
     mysqli_query($conexao, $sql);
@@ -48,7 +55,7 @@ if (isset($_POST['atualizar'])) {
 
 <h2>Editar Curso</h2>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 
     <label>Nome:</label><br>
     <input type="text" name="nome" value="<?= $curso['nome'] ?>" required><br><br>
@@ -65,6 +72,16 @@ if (isset($_POST['atualizar'])) {
         <option value="intermediario" <?= $curso['nivel']=="intermediario" ? "selected" : "" ?>>Intermediário</option>
         <option value="avancado" <?= $curso['nivel']=="avancado" ? "selected" : "" ?>>Avançado</option>
     </select><br><br>
+
+    <label>Thumbnail actual:</label><br>
+    <?php if ($curso['thumbnail']): ?>
+        <img src="<?= $curso['thumbnail'] ?>" alt="Thumbnail" width="200"><br><br>
+    <?php else: ?>
+        <p>Sem thumbnail.</p>
+    <?php endif; ?>
+
+    <label>Nova thumbnail (deixa vazio para manter a actual):</label><br>
+    <input type="file" name="thumbnail" accept="image/*"><br><br>
 
     <button type="submit" name="atualizar">Atualizar</button>
 

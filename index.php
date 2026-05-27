@@ -18,19 +18,28 @@ include("conexao.php");
 
     <h2>📚 Os meus cursos</h2>
     <?php
-    $meus_cursos = mysqli_query($conexao, "SELECT id, nome FROM cursos WHERE formador_id=$usuario_id");
+    $meus_cursos = mysqli_query($conexao, "SELECT id, nome, thumbnail FROM cursos WHERE formador_id=$usuario_id");
     if (mysqli_num_rows($meus_cursos) == 0):
     ?>
         <p>Ainda não criaste nenhum curso.</p>
     <?php else: ?>
         <?php while($c = mysqli_fetch_assoc($meus_cursos)): ?>
-            <p>
-                <?= $c['nome'] ?> —
-                <a href="ver_aulas_formador.php?curso_id=<?= $c['id'] ?>">Ver aulas</a> |
-                <a href="criar_aula.php?curso_id=<?= $c['id'] ?>">Adicionar aula</a> |
-                <a href="editar_curso.php?id=<?= $c['id'] ?>">Editar</a> |
-                <a href="Apagar_curso.php?id=<?= $c['id'] ?>" onclick="return confirm('Tens a certeza?')">Apagar</a>
-            </p>
+            <div class="curso-card">
+                <?php if ($c['thumbnail']): ?>
+                    <img src="<?= $c['thumbnail'] ?>" alt="Thumbnail" width="150"><br>
+                <?php endif; ?>
+                <p>
+                    <strong><?= $c['nome'] ?></strong> —
+                    <a href="ver_aulas_formador.php?curso_id=<?= $c['id'] ?>">Ver aulas</a>
+                    &nbsp;|&nbsp;
+                    <a href="criar_aula.php?curso_id=<?= $c['id'] ?>">Adicionar aula</a>
+                    &nbsp;|&nbsp;
+                    <a href="editar_curso.php?id=<?= $c['id'] ?>">Editar</a>
+                    &nbsp;|&nbsp;
+                    <a href="Apagar_curso.php?id=<?= $c['id'] ?>" onclick="return confirm('Tens a certeza?')">Apagar</a>
+                </p>
+            </div>
+            <hr>
         <?php endwhile; ?>
     <?php endif; ?>
 
@@ -42,8 +51,8 @@ include("conexao.php");
 
     <h2>📚 Cursos inscritos</h2>
     <?php
-    $inscritos = mysqli_query($conexao, 
-        "SELECT cursos.id, cursos.nome,
+    $inscritos = mysqli_query($conexao,
+        "SELECT cursos.id, cursos.nome, cursos.thumbnail,
                 COUNT(DISTINCT aulas.id) AS total_aulas,
                 SUM(CASE WHEN progresso_aulas.concluida = 1 THEN 1 ELSE 0 END) AS aulas_concluidas
          FROM inscricoes
@@ -52,7 +61,7 @@ include("conexao.php");
          LEFT JOIN progresso_aulas ON progresso_aulas.aula_id = aulas.id
                                    AND progresso_aulas.usuario_id = $usuario_id
          WHERE inscricoes.usuario_id = $usuario_id
-         GROUP BY cursos.id, cursos.nome");
+         GROUP BY cursos.id, cursos.nome, cursos.thumbnail");
 
     if (mysqli_num_rows($inscritos) == 0):
     ?>
@@ -64,12 +73,17 @@ include("conexao.php");
                 $concluidas = $c['aulas_concluidas'];
                 $percentagem = $total > 0 ? round(($concluidas / $total) * 100) : 0;
             ?>
-            <p><?= $c['nome'] ?></p>
-<p>Progresso: <?= $concluidas ?>/<?= $total ?> aulas concluídas</p>
-            <progress value="<?= $percentagem ?>" max="100"></progress>
-            <span><?= $percentagem ?>%</span> —
-            <a href="ver_aulas.php?curso_id=<?= $c['id'] ?>">Ver Aulas</a>
-            <HR></HR>
+            <div class="curso-card">
+                <?php if ($c['thumbnail']): ?>
+                    <img src="<?= $c['thumbnail'] ?>" alt="Thumbnail" width="150"><br>
+                <?php endif; ?>
+                <p><strong><?= $c['nome'] ?></strong></p>
+                <p>Progresso: <?= $concluidas ?>/<?= $total ?> aulas concluídas</p>
+                <progress value="<?= $percentagem ?>" max="100"></progress>
+                <span><?= $percentagem ?>%</span> —
+                <a href="ver_aulas.php?curso_id=<?= $c['id'] ?>">Ver Aulas</a>
+            </div>
+            <hr>
         <?php endwhile; ?>
     <?php endif; ?>
 

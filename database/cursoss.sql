@@ -62,3 +62,10 @@ UNIQUE(usuario_id, curso_id);
 ALTER TABLE progresso_aulas
 ADD CONSTRAINT unique_progresso
 UNIQUE(usuario_id, aula_id);
+
+ALTER TABLE aulas 
+ADD COLUMN video VARCHAR(255),
+ADD COLUMN thumbnail VARCHAR(255);
+
+ALTER TABLE cursos
+ADD COLUMN thumbnail VARCHAR(255);

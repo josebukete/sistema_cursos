@@ -50,6 +50,9 @@ $resultado = mysqli_query($conexao, $sql);
 <?php while($curso = mysqli_fetch_assoc($resultado)): ?>
 
     <h3><?= $curso['nome'] ?></h3>
+    <?php if ($curso['thumbnail']): ?>
+    <img src="<?= $curso['thumbnail'] ?>" alt="Thumbnail" width="250"><br><br>
+    <?php endif; ?>
     <p>Por: <?= $curso['nome_formador'] ?></p>
     <p><?= $curso['descricao'] ?></p>
     <p>Categoria: <?= $curso['categoria'] ?> | Nível: <?= $curso['nivel'] ?></p>
@@ -76,10 +79,11 @@ $resultado = mysqli_query($conexao, $sql);
     <?php endif; ?>
 
     <?php if ($usuario_tipo == 'formador' && $curso['formador_id'] == $usuario_id): ?>
-        <a href="editar_curso.php?id=<?= $curso['id'] ?>">Editar</a> |
-        <a href="Apagar_curso.php?id=<?= $curso['id'] ?>"
-           onclick="return confirm('Tens a certeza?')">Apagar</a>
-    <?php endif; ?>
+    <a href="ver_aulas_formador.php?curso_id=<?= $curso['id'] ?>">Ver aulas</a> |
+    <a href="editar_curso.php?id=<?= $curso['id'] ?>">Editar</a> |
+    <a href="Apagar_curso.php?id=<?= $curso['id'] ?>"
+       onclick="return confirm('Tens a certeza?')">Apagar</a>
+<?php endif; ?>
 
     <hr>
 
